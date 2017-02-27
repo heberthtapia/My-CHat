@@ -1,4 +1,4 @@
-<?php 
+<?php
 	$bd = "chateje";
 	$server = "localhost";
 	$user = "root";
