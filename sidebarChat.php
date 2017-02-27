@@ -7,23 +7,24 @@ $db = NewADOConnection('mysqli');
 //$db->debug = true;
 $db->Connect();
 
-$id_admin = $_SESSION["id_admin"];
+$userFrom = $_POST['userFrom'];//$_SESSION["id_admin"];
 
-$user = $_POST['usuario'];
+$userTo = $_POST['userTo'];
+
 $num  = $_POST['num'];
 
-$sql = 'SELECT * FROM usuario WHERE id_empleado = '.$user.'';
+$sql = 'SELECT * FROM usuario WHERE id_empleado = '.$userTo.'';
 $srtQuery = $db->Execute($sql);
 
 $row = $srtQuery->FetchRow();
 
 $num ++;
 
-$srtSql = 'SELECT chatID FROM chat WHERE sendFrom = '.$id_admin.' AND sendTo = '.$user.'';
+$srtSql = 'SELECT chatID FROM chat WHERE sendFrom = '.$userFrom.' AND sendTo = '.$userTo.'';
 $srtQ = $db->Execute($srtSql);
 
 if($srtQ){
-	echo $srtSql = 'SELECT chatID FROM chat WHERE sendFrom = '.$user.' AND sendTo = '.$id_admin.'';
+	$srtSql = 'SELECT chatID FROM chat WHERE sendFrom = '.$userTo.' AND sendTo = '.$userFrom.'';
 	$srtQ = $db->Execute($srtSql);
 }
 
@@ -38,7 +39,7 @@ $query = $db->Execute($sqlQuery);
 
 
 $html = '
-<aside id="'.$row[0].'" class="tabbed_sidebar ng-scope chat_sidebar" style="right: '.((320*$num)+30).'px; width: 300px;">
+<aside id="'.$userFrom.''.$userTo.'" class="tabbed_sidebar ng-scope chat_sidebar" style="right: '.((320*$num)+30).'px; width: 300px;">
 
 	<div class="popup-head">
     	<div class="popup-head-left pull-left">
@@ -53,22 +54,18 @@ $html = '
         </div>
 	</div>
 
-<div id="chat" class="chat_box_wrapper chat_box_small chat_box_active" style="opacity: 1; display: block; transform: translateX(0px);">
-    <div class="chat_box touchscroll chat_box_colors_a">';
+<div id="chat'.$userFrom.''.$userTo.'" class="chat_box_wrapper chat_box_small chat_box_active" style="opacity: 1; display: block; transform: translateX(0px);">
+    <div id="chat_box_'.$userFrom.''.$userTo.'" class="chat_box touchscroll chat_box_colors_a">';
 
       	$m1 = 0;
         $m2 = 0;
         $sw = 0;
 		while($reg = $query->FetchRow()){
 		while ($sw == 0) {
-
+		if ($reg[2] == $userFrom) {
+			$m1++;
 $html.='<div class="chat_message_wrapper">';
 
-		//print_r($reg);
-
-
-		if ($reg[2] == $id_admin) {
-			$m1++;
 			if($m1 == 1){
 
 $html.='<div class="chat_user_avatar">
@@ -84,7 +81,7 @@ $html.='    <li>
 
 		while($reg = $query->FetchRow()){
 			//print_r($reg);
-			if ($reg[2] == $id_admin) {
+			if ($reg[2] == $userFrom) {
 
 $html.='    <li>
                 <p>'.$reg[4].'</p>
@@ -95,15 +92,14 @@ $html.='    <li>
     	    }
     	}
 
-$html.='</ul>';
-        }
+$html.='</ul>
 
-$html.='</div>
-
-        <div class="chat_message_wrapper chat_message_right">';
-
-        if ($reg[2] == $user) {
+		</div>';
+		}
+		if ($reg[2] == $userTo) {
 			$m2++;
+$html.='<div class="chat_message_wrapper chat_message_right">';
+
 			if($m2 == 1){
 
 $html.='<div class="chat_user_avatar">
@@ -118,7 +114,7 @@ $html.='    <li>
     		}
 
 		while($reg = $query->FetchRow()){
-			if ($reg[2] == $user) {
+			if ($reg[2] == $userTo) {
 $html.='    <li>
                 <p>'.$reg[4].'</p>
             </li>';
@@ -128,9 +124,11 @@ $html.='    <li>
     	    }
     	}
 $html.='</ul>';
-     	}
-     	if(!$reg) $sw = 1;
+
+
 $html.='</div>';
+		}
+		if(!$reg) $sw = 1;
      }
 	}
 
@@ -139,10 +137,10 @@ $html.='</div>
 	<div class="chat_submit_box">
 	    <div class="uk-input-group">
 	        <div class="gurdeep-chat-box">
-		        <input type="text" placeholder="Escriba mensaje" id="submit_message" name="submit_message" class="md-input">
+		        <input type="text" placeholder="Escriba mensaje" id="submit_message'.$row[0].'" name="submit_message'.$row[0].'" class="md-input">
 	        </div>
 		    <span class="uk-input-group-addon">
-		    	<a href="#"><i class="glyphicon glyphicon-send"></i></a>
+		    	<a href="#" id = "send'.$row[0].'" onclick = "sendSubmit('.$row[0].')" ><i class="glyphicon glyphicon-send"></i></a>
 		    </span>
 	    </div>
 	</div>

@@ -29,45 +29,23 @@
 		<link rel="stylesheet" type="text/css" href="css/myStyle.css">
 
 		<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
 
 		<title>Programando Brother's</title>
 	</head>
+	<style type="text/css">
+		input{
+			border: 0 none; 
+  			width: 100%;
+  			padding: 3px 0;
+		}
+	</style>
 	<body>
-		<div  class="container-fluid">
-			<section  style="padding: 15%;">
-				<div class="row">
-					<h1 class="text-center">Chat: <small>Programando Brother's</small></h1>
-					<hr>
-				</div>
-				<div class="row">
-					<form id="formChat" role="form">
-						<div class="form-group">
-							<label for="user">User</label>
-							<input type="text" class="form-control" id="user" name="user" placeholder="Enter User">
-						</div>
-						<div class="form-group">
-							<div class="row">
-								<div class="col-md-12" >
-									<div id="conversation" style="height:200px; border: 1px solid #CCCCCC; padding: 12px;  border-radius: 5px; overflow-x: hidden;">
 
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="message">Message</label>
-							<input id="message" name="message" placeholder="Enter Message"  class="form-control" rows="3">
-						</div>
-						<input type="submit" name="" class="btn btn-primary" value="Enviar">
-					</form>
-				</div>
-			</section>
-		</div>
-
-	<!--AQUI ESTA EL CHAT TIPOS whatsapp-->
-
+<p>Quien envia mensaje:</p>
+<input type="text=""" name="userFrom" id="userFrom">
 
 <aside id="sidebar_primary" class="tabbed_sidebar ng-scope chat_sidebar">
 
@@ -96,6 +74,7 @@
         </div>
 	</div>
 
+
 <div id="conectados" class="chat_box_wrapper chat_box_small chat_box_active" style="opacity: 1; display: block; transform: translateX(0px);">
     <div class="chat_box touchscroll chat_box_colors_a">
 
@@ -123,162 +102,33 @@
 
 </aside>
 
-<div id="sidebar">
-
-<!--<aside id="sidebar_secondary" class="tabbed_sidebar ng-scope chat_sidebar">
-
-	<div class="popup-head">
-    	<div class="popup-head-left pull-left">
-    		<a title="Foto de Perfil" target="_blank" href="">
-				<img class="md-user-image" alt="Foto de Perfil" title="Foto de Perfil" src="images/perfil.jpg" >
-				<h1>Heberth Tapia</h1><small><br> <i class="fa fa-briefcase" aria-hidden="true"></i> Administrador</small>
-			</a>
-		</div>
-		<div class="popup-head-right pull-right">
-            <button class="chat-header-button" type="button"><i class="fa fa-minus" aria-hidden="true"></i>
-</button>
-			<button class="chat-header-button" type="button"><i class="glyphicon glyphicon-earphone"></i></button>
-            <div class="btn-group gurdeepoushan">
-				<button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
-				<i class="glyphicon glyphicon-paperclip"></i> </button>
-				<ul role="menu" class="dropdown-menu pull-right">
-					<li><a href="#"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Gallery</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Photo</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Video</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span> Audio</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Location</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Contact</a></li>
-				</ul>
-			</div>
-
-			<button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i class="fa fa-remove" aria-hidden="true"></i></button>
-        </div>
-	</div>
-
-<div id="chat" class="chat_box_wrapper chat_box_small chat_box_active" style="opacity: 1; display: block; transform: translateX(0px);">
-    <div class="chat_box touchscroll chat_box_colors_a">
-
-        <div class="chat_message_wrapper">
-
-            <div class="chat_user_avatar">
-                <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >
-                    <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"  src="http://www.webncc.in/images/gurdeeposahan.jpg" class="md-user-image">
-                </a>
-            </div>
-                <ul class="chat_message">
-                    <li>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, eum? </p>
-                    </li>
-                    <li>
-                        <p> Lorem ipsum dolor sit amet.<span class="chat_message_time">13:38</span> </p>
-                    </li>
-                </ul>
-
-        </div>
-
-        <div class="chat_message_wrapper chat_message_right">
-
-            <div class="chat_user_avatar">
-                <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >
-                    <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">
-                </a>
-            </div>
-                <ul class="chat_message">
-                    <li>
-                        <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem delectus distinctio dolor earum est hic id impedit ipsum minima mollitia natus nulla perspiciatis quae quasi, quis recusandae, saepe, sunt totam.
-                        <span class="chat_message_time">13:34</span>
-                        </p>
-                    </li>
-                </ul>
-
-        </div>
-                            <div class="chat_message_wrapper">
-                                <div class="chat_user_avatar">
-                                <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >
-                                    <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://www.webncc.in/images/gurdeeposahan.jpg" class="md-user-image">
-                                </a>
-                                </div>
-                                <ul class="chat_message">
-                                    <li>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque ea mollitia pariatur porro quae sed sequi sint tenetur ut veritatis.https://www.facebook.com/iamgurdeeposahan
-                                            <span class="chat_message_time">23 Jun 1:10am</span>
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="chat_message_wrapper chat_message_right">
-                                <div class="chat_user_avatar">
-                                <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >
-                                    <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">
-                                </a>
-                                </div>
-                                <ul class="chat_message">
-                                    <li>
-                                        <p> Lorem ipsum dolor sit amet, consectetur. </p>
-                                    </li>
-                                    <li>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                            <span class="chat_message_time">Friday 13:34</span>
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-	<div class="chat_submit_box">
-	    <div class="uk-input-group">
-	        <div class="gurdeep-chat-box">
-	        <span style="vertical-align: sub;" class="uk-input-group-addon">
-	        <a href="#"><i class="fa fa-smile-o"></i></a>
-	        </span>
-	        <input type="text" placeholder="Type a message" id="submit_message" name="submit_message" class="md-input">
-	        <span style="vertical-align: sub;" class="uk-input-group-addon">
-	        <a href="#"><i class="fa fa-camera"></i></a>
-	        </span>
-	        </div>
-
-	    <span class="uk-input-group-addon">
-	    <a href="#"><i class="glyphicon glyphicon-send"></i></a>
-	    </span>
-	    </div>
-	</div>
-
-</aside>-->
-
-</div>
-	<!--AQUI ESTA EL FIN CHAT TIPO whatsapp-->
-
-
+<div id="sidebar"></div>
 
 <script>
-	function chatClick(usuario){
-
+	function chatClick(userTo){
+		userFrom = $('input#userFrom').val();
 		num = $('#sidebar > aside').length;
 		sw = 0;
-
 		$('#sidebar aside').each(function (index)
 	    {
 	        id = $(this).attr('id');
-	        if(id == usuario){
+	        if(id == userTo){
 	          	sw = 1;
 	        }
 		});
 
 		if( sw === 0){
-
 			$.ajax({
 				url: 'sidebarChat.php',
 				type: 'POST',
-				data: {usuario: usuario, num: num}
+				data: {userTo: userTo, num: num, userFrom: userFrom}
 			})
 			.done(function(data) {
 				console.log("success");
-				$('#sidebar').append(data);
-				var alt = $("#chat").prop("scrollHeight");
-				$("#chat").scrollTop(alt);
+				$('#sidebar').append(data);				
+				var alt = $("#chat"+userFrom+userTo).prop("scrollHeight");
+				alert('==>><<'+userFrom+userTo+'---------->>>>'+alt);
+				$("#chat"+userFrom+userTo).scrollTop(alt);
 			})
 			.fail(function() {
 				console.log("error");
@@ -288,7 +138,7 @@
 			});
 		}
 
-		$("#send").on("click", function(e){
+		/*$("#send").on("click", function(e){
 			e.preventDefault();
 			var frm = $("#formChat").serialize();
 
@@ -303,17 +153,91 @@
 				$("conversation").scrollTop(altura);
 				console.log(info);
 			});
-		});
+		});*/
+	}
+var pusher = new Pusher('4e89620472fb0a58c62c');
+var canal = pusher.subscribe('canal_prueba');
+
+$(function(){
+
+	canal.bind('nuevo_comentario', function(data) {
+		/* Act on the event */			
+		f = $('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').hasClass( "chat_message_right" ).toString();
+		if( f == 'false' ){
+			$('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').find('ul').append('<li><p>'+data.mensaje+'</p></li>');
+		}else{
+			t = '<div class="chat_message_wrapper">';
+			t+= '<div class="chat_user_avatar">';
+			t+= '   <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >';
+			t+= '     <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">';
+			t+= '   </a>';
+			t+= '</div>';
+			t+= '	<ul class="chat_message">';
+			t+= '        <li>';
+			t+= '            <p>'+data.mensaje+'</p>';
+			t+= '        </li>';
+			t+= '    </ul> </div>';
+			$('div#chat_box_'+data.userTo+data.userFrom).append(t);
+		}
+		alt = $("#chat"+data.userTo+data.userFrom).prop("scrollHeight");
+		$("#chat"+data.userTo+data.userFrom).scrollTop(alt);	
+	});
+});
+
+function sendSubmit(idTo){
+
+	r = $('div#chat_box_'+idTo+' div.chat_message_wrapper:last').hasClass( "chat_message_right" ).toString();
+	if( r == 'true' ){
+		$.post(
+			'ajax.php',
+			{ msj : $('#submit_message'+idTo).val(), userFrom : $('#userFrom').val(), userTo : idTo, socket_id : pusher.connection.socket_id},
+			function(data){
+					//$('#conversation').append('<p><b>'+data.user+'</b> dice: '+data.mensaje+'</p>');
+					$('div#chat_box_'+data.userFrom+idTo+' div.chat_message_wrapper:last').find('ul').append('<li><p>'+data.mensaje+'</p></li>');
+					
+					alt = $("#chat"+data.userFrom+idTo).prop("scrollHeight");	
+					$("#chat"+data.userFrom+idTo).scrollTop(alt);
+				},
+				'json');
+		return false;
+	}else{
+
+		$.post(
+			'ajax.php',
+			{ msj : $('#submit_message'+idTo).val(), userFrom : $('#userFrom').val(), userTo : idTo, socket_id : pusher.connection.socket_id},
+			function(data){
+					//$('#conversation').append('<p><b>'+data.user+'</b> dice: '+data.mensaje+'</p>');
+					t = '<div class="chat_message_wrapper chat_message_right">';
+					t+= '<div class="chat_user_avatar">';
+					t+= '   <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >';
+					t+= '     <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">';
+					t+= '   </a>';
+					t+= '</div>';
+					t+= '	<ul class="chat_message">';
+					t+= '        <li>';
+					t+= '            <p>'+data.mensaje+'</p>';
+					t+= '        </li>';
+					t+= '    </ul> </div>';
+					
+					$('div#chat_box_'+data.userFrom+idTo).append(t);
+					
+					alt = $("#chat"+data.userFrom+idTo).prop("scrollHeight");
+					$("#chat"+data.userFrom+idTo).scrollTop(alt);
+				},
+				'json');
+		return false;
 	}
 
-	$(function(){
+}
+
+	/*$(function(){
 
 		var pusher = new Pusher('4e89620472fb0a58c62c');
 		var canal = pusher.subscribe('canal_prueba');
 
 		canal.bind('nuevo_comentario', function(data) {
 			/* Act on the event */
-			$('#conversation').append('<p><b>'+data.user+'</b> dice: '+data.mensaje+'</p>');
+		/*	$('#conversation').append('<p><b>'+data.user+'</b> dice: '+data.mensaje+'</p>');
 		});
 
 		$('#formChat').submit(function(){
@@ -327,7 +251,7 @@
 
 			return false;
 		});
-	});
+	});*/
 
 </script>
 	</body>

@@ -3,7 +3,8 @@
 	require 'lib/Pusher.php';
 
 	$mensaje = $_POST['msj'];
-	$user = $_POST['user'];
+	$userFrom = $_POST['userFrom'];
+	$userTo = $_POST['userTo'];
 
 	$options = array(
     	//'encrypted' => true
@@ -19,9 +20,9 @@
 	$pusher->trigger(
 		'canal_prueba',
 		'nuevo_comentario',
-		array('mensaje' => $mensaje, 'user' => $user),
+		array('mensaje' => $mensaje, 'userFrom' => $userFrom, 'userTo' => $userTo),
 		$_POST['socket_id']
 	);
 
-	echo json_encode( array('mensaje' => $mensaje, 'user' => $user));
+	echo json_encode( array('mensaje' => $mensaje, 'userFrom' => $userFrom , 'userTo' => $userTo));
  ?>

@@ -261,6 +261,11 @@ img {
     margin-left: 0 !important;
     margin-right: 24px !important;
 }
+
+.chat_box .chat_message_wrapper.chat_message_right ul.chat_message li{
+    float: right;
+}
+
 .chat_box.chat_box_colors_a .chat_message_wrapper.chat_message_right ul.chat_message > li:first-child::before {
     border-left-color: #E8FFD4;
 }
