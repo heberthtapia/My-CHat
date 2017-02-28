@@ -32,8 +32,8 @@ a:focus {
 }
 .chat-header-button {
     background: transparent none repeat scroll 0 0;
-    border: 1px solid #fff;
-    border-radius: 7px;
+    /*border: 1px solid #fff;
+    border-radius: 7px;*/
     /*font-size: 15px;*/
     height: 26px;
     opacity: 0.9;
@@ -42,6 +42,7 @@ a:focus {
     width: 26px;
 
     margin-left: 3px;
+    border: none;
 }
 .popup-head-right {
     margin: 9px 0 0;
@@ -334,4 +335,14 @@ img {
     display: table;
     position: relative;
     width: 100%;
+}
+
+.chatMessage{
+    border: 0 none; 
+    width: 100%;
+    padding: 3px 0;
+}
+
+.chatSubmit{
+    
 }

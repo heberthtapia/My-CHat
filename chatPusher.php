@@ -35,13 +35,6 @@
 
 		<title>Programando Brother's</title>
 	</head>
-	<style type="text/css">
-		input{
-			border: 0 none; 
-  			width: 100%;
-  			padding: 3px 0;
-		}
-	</style>
 	<body>
 
 <p>Quien envia mensaje:</p>
@@ -99,73 +92,159 @@
 
         </div>
 	</div>
-
+	
 </aside>
 
 <div id="sidebar"></div>
 
 <script>
-	function chatClick(userTo){
-		userFrom = $('input#userFrom').val();
-		num = $('#sidebar > aside').length;
-		sw = 0;
-		$('#sidebar aside').each(function (index)
-	    {
-	        id = $(this).attr('id');
-	        if(id == userTo){
-	          	sw = 1;
-	        }
-		});
-
-		if( sw === 0){
-			$.ajax({
-				url: 'sidebarChat.php',
-				type: 'POST',
-				data: {userTo: userTo, num: num, userFrom: userFrom}
-			})
-			.done(function(data) {
-				console.log("success");
-				$('#sidebar').append(data);				
-				var alt = $("#chat"+userFrom+userTo).prop("scrollHeight");
-				alert('==>><<'+userFrom+userTo+'---------->>>>'+alt);
-				$("#chat"+userFrom+userTo).scrollTop(alt);
-			})
-			.fail(function() {
-				console.log("error");
-			})
-			.always(function() {
-				console.log("complete");
-			});
+function chatClickSend(userTo, e){
+	userFrom = $('input#userFrom').val();
+	num = $('#sidebar > aside').length;
+	sw = 0;
+	$('#sidebar aside').each(function (index)
+	{
+		id = $(this).attr('id');
+		if(id == userFrom+userTo){
+			sw = 1;
+			sendMessage(e);
 		}
-
-		/*$("#send").on("click", function(e){
-			e.preventDefault();
-			var frm = $("#formChat").serialize();
-
-			$.ajax({
-				url: 'register.php',
-				type: 'POST',
-				data: frm
-			})
-			.done(function(info) {
-				$("#message").val("");
-				var altura = $("#conversation").prop("scrollHeight");
-				$("conversation").scrollTop(altura);
-				console.log(info);
-			});
-		});*/
+	});
+	if( sw === 0){
+		$.ajax({
+			url: 'sidebarChat.php',
+			type: 'POST',
+			async:true,
+			data: {userTo: userTo, num: num, userFrom: userFrom}
+		})
+		.done(function(data) {
+			console.log("success");
+			//alert(userFrom+'---'+e.userTo);
+			if(userFrom == e.userTo){
+				$('#sidebar').append(data);				
+				var alt = $("#chat"+userFrom+userTo).prop("scrollHeight");				
+				$("#chat"+userFrom+userTo).scrollTop(alt);
+			}
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+			sendMessage(e);
+		});
 	}
+}
+
+function chatClick(userTo){
+	userFrom = $('input#userFrom').val();
+	num = $('#sidebar > aside').length;
+	sw = 0;
+	$('#sidebar aside').each(function (index)
+	{
+		id = $(this).attr('id');
+		if(id == userFrom+userTo){
+			sw = 1;
+		}
+	});
+	if( sw === 0){
+		$.ajax({
+			url: 'sidebarChat.php',
+			type: 'POST',
+			async:true,
+			data: {userTo: userTo, num: num, userFrom: userFrom}
+		})
+		.done(function(data) {
+			console.log("success");
+			$('#sidebar').append(data);				
+			var alt = $("#chat"+userFrom+userTo).prop("scrollHeight");				
+			$("#chat"+userFrom+userTo).scrollTop(alt);
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+	}
+}
 var pusher = new Pusher('4e89620472fb0a58c62c');
 var canal = pusher.subscribe('canal_prueba');
 
 $(function(){
 
 	canal.bind('nuevo_comentario', function(data) {
-		/* Act on the event */			
+		/* Act on the event */
+		chatClickSend(data.userFrom,data);
+		//sendMessage(data);
+		//delay(100);
+		
+	});
+
+});
+
+
+/*$(function(){
+
+	canal.bind('nuevo_comentario', function(data) {
+		/* Act on the event 	
 		f = $('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').hasClass( "chat_message_right" ).toString();
-		if( f == 'false' ){
-			$('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').find('ul').append('<li><p>'+data.mensaje+'</p></li>');
+
+		if( f == 'true' ){
+			t = '<div class="chat_message_wrapper">';
+			t+= '<div class="chat_user_avatar">';
+			t+= '   <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >';
+			t+= '     <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">';
+			t+= '   </a>';
+			t+= '</div>';
+			t+= '	<ul class="chat_message">';
+			t+= '        <li>';
+			t+= '            <p>'+data.mensaje+'</p>';
+			t+= '        </li>';
+			t+= '    </ul> </div>';
+			$('div#chat_box_'+data.userTo+data.userFrom).append(t);			
 		}else{
+			if( $('div#chat_box_'+data.userTo+data.userFrom).is(':empty') ){				
+				t = '<div class="chat_message_wrapper">';
+				t+= '<div class="chat_user_avatar">';
+				t+= '   <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >';
+				t+= '     <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">';
+				t+= '   </a>';
+				t+= '</div>';
+				t+= '	<ul class="chat_message">';
+				t+= '        <li>';
+				t+= '            <p>'+data.mensaje+'</p>';
+				t+= '        </li>';
+				t+= '    </ul> </div>';
+				$('div#chat_box_'+data.userTo+data.userFrom).append(t);
+			}else{
+				$('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').find('ul').append('<li><p>'+data.mensaje+'</p></li>');
+			}
+		}
+		alt = $("#chat"+data.userTo+data.userFrom).prop("scrollHeight");
+		$("#chat"+data.userTo+data.userFrom).scrollTop(alt);	
+	});
+});*/
+
+function sendMessage(data){
+
+	f = $('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').hasClass( "chat_message_right" ).toString();
+
+	if( f == 'true' ){
+		t = '<div class="chat_message_wrapper">';
+		t+= '<div class="chat_user_avatar">';
+		t+= '   <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >';
+		t+= '     <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">';
+		t+= '   </a>';
+		t+= '</div>';
+		t+= '	<ul class="chat_message">';
+		t+= '        <li>';
+		t+= '            <p>'+data.mensaje+'</p>';
+		t+= '        </li>';
+		t+= '    </ul> </div>';
+		$('div#chat_box_'+data.userTo+data.userFrom).append(t);			
+	}else{
+		if( $('div#chat_box_'+data.userTo+data.userFrom).is(':empty') ){				
 			t = '<div class="chat_message_wrapper">';
 			t+= '<div class="chat_user_avatar">';
 			t+= '   <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >';
@@ -178,15 +257,20 @@ $(function(){
 			t+= '        </li>';
 			t+= '    </ul> </div>';
 			$('div#chat_box_'+data.userTo+data.userFrom).append(t);
+		}else{
+			$('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').find('ul').append('<li><p>'+data.mensaje+'</p></li>');
 		}
-		alt = $("#chat"+data.userTo+data.userFrom).prop("scrollHeight");
-		$("#chat"+data.userTo+data.userFrom).scrollTop(alt);	
-	});
-});
+	}
+	alt = $("#chat"+data.userTo+data.userFrom).prop("scrollHeight");
+	$("#chat"+data.userTo+data.userFrom).scrollTop(alt);	
+}
 
 function sendSubmit(idTo){
 
-	r = $('div#chat_box_'+idTo+' div.chat_message_wrapper:last').hasClass( "chat_message_right" ).toString();
+	userFrom = $('input#userFrom').val();
+
+	r = $('div#chat_box_'+userFrom+idTo+' div.chat_message_wrapper:last').hasClass( "chat_message_right" ).toString();
+
 	if( r == 'true' ){
 		$.post(
 			'ajax.php',
@@ -197,6 +281,8 @@ function sendSubmit(idTo){
 					
 					alt = $("#chat"+data.userFrom+idTo).prop("scrollHeight");	
 					$("#chat"+data.userFrom+idTo).scrollTop(alt);
+
+					$('#submit_message'+idTo).val('');
 				},
 				'json');
 		return false;
@@ -223,36 +309,15 @@ function sendSubmit(idTo){
 					
 					alt = $("#chat"+data.userFrom+idTo).prop("scrollHeight");
 					$("#chat"+data.userFrom+idTo).scrollTop(alt);
+
+					$('#submit_message'+idTo).val('');
 				},
 				'json');
 		return false;
 	}
 
 }
-
-	/*$(function(){
-
-		var pusher = new Pusher('4e89620472fb0a58c62c');
-		var canal = pusher.subscribe('canal_prueba');
-
-		canal.bind('nuevo_comentario', function(data) {
-			/* Act on the event */
-		/*	$('#conversation').append('<p><b>'+data.user+'</b> dice: '+data.mensaje+'</p>');
-		});
-
-		$('#formChat').submit(function(){
-			$.post(
-				'ajax.php',
-				{ msj : $('#message').val(), user : $('#user').val(), socket_id : pusher.connection.socket_id},
-				function(data){
-					$('#conversation').append('<p><b>'+data.user+'</b> dice: '+data.mensaje+'</p>');
-				},
-			'json');
-
-			return false;
-		});
-	});*/
-
 </script>
+<form ></form>
 	</body>
 </html>

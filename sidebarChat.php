@@ -49,8 +49,8 @@ $html = '
 			</a>
 		</div>
 		<div class="popup-head-right pull-right">
-            <button class="chat-header-button" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
-			<button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i class="fa fa-remove" aria-hidden="true"></i></button>
+            <button class="chat-header-button" type="button"><i class="glyphicon glyphicon-minus"></i></button>
+			<button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-remove"></i></button>
         </div>
 	</div>
 
@@ -136,17 +136,23 @@ $html.='</div>';
 $html.='</div>
 	<div class="chat_submit_box">
 	    <div class="uk-input-group">
-	        <div class="gurdeep-chat-box">
-		        <input type="text" placeholder="Escriba mensaje" id="submit_message'.$row[0].'" name="submit_message'.$row[0].'" class="md-input">
-	        </div>
-		    <span class="uk-input-group-addon">
-		    	<a href="#" id = "send'.$row[0].'" onclick = "sendSubmit('.$row[0].')" ><i class="glyphicon glyphicon-send"></i></a>
-		    </span>
+	    	<form id="formChat'.$row[0].'" method="POST">
+		        <div class="gurdeep-chat-box">
+			        <input type="text" placeholder="Escriba mensaje" id="submit_message'.$row[0].'" name="submit_message'.$row[0].'" class="md-input chatMessage">
+		        </div>
+			    <span class="uk-input-group-addon">
+			    	<a href="#" id = "send'.$row[0].'" onclick = "sendSubmit('.$row[0].')" ><i class="glyphicon glyphicon-send"></i></a>
+			    </span>
+			</form>
 	    </div>
 	</div>
-
-</aside>
-';
+<script type="text/javascript">
+	$( "#formChat'.$row[0].'" ).submit(function( event ) {
+	  	sendSubmit('.$row[0].');
+		event.preventDefault();
+	});
+</script>
+</aside>';
 
 echo $html;
 

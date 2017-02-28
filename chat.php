@@ -31,9 +31,9 @@
 						</div>
 						<div class="form-group">
 							<label for="message">Message</label>
-							<textarea id="message" name="message" placeholder="Enter Message"  class="form-control" rows="3"></textarea>
+							<input id="message" name="message" placeholder="Enter Message"  class="form-control" rows="3"></input>
 						</div>
-						<button id="send" class="btn btn-primary" >Send</button>
+						<button id="send" class="btn btn-primary" type="submit" >Send</button>
 					</form>
 				</div>
 			</section>
