@@ -39,7 +39,7 @@ $query = $db->Execute($sqlQuery);
 
 
 $html = '
-<aside id="'.$userFrom.''.$userTo.'" class="tabbed_sidebar ng-scope chat_sidebar" style="right: '.((320*$num)+30).'px; width: 300px;">
+<aside id="'.$userFrom.''.$userTo.'" class="tabbed_sidebar ng-scope chat_sidebar" style="right: '.((280*$num)+30).'px; width: 260px;">
 
 	<div class="popup-head">
     	<div class="popup-head-left pull-left">
@@ -49,11 +49,11 @@ $html = '
 			</a>
 		</div>
 		<div class="popup-head-right pull-right">
-            <button class="chat-header-button" type="button"><i class="glyphicon glyphicon-minus"></i></button>
-			<button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-remove"></i></button>
+            <button class="chat-header-button" type="button" onclick="minimizar(&#39;chat'.$userFrom.''.$userTo.'&#39;)"><i class="glyphicon glyphicon-minus"></i></button>
+			<button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button" onclick="cerrar(&#39;'.$userFrom.''.$userTo.'&#39;)"><i class="glyphicon glyphicon-remove"></i></button>
         </div>
 	</div>
-
+<div class="chat'.$userFrom.''.$userTo.'">
 <div id="chat'.$userFrom.''.$userTo.'" class="chat_box_wrapper chat_box_small chat_box_active" style="opacity: 1; display: block; transform: translateX(0px);">
     <div id="chat_box_'.$userFrom.''.$userTo.'" class="chat_box touchscroll chat_box_colors_a">';
 
@@ -146,6 +146,7 @@ $html.='</div>
 			</form>
 	    </div>
 	</div>
+</div>
 <script type="text/javascript">
 	$( "#formChat'.$row[0].'" ).submit(function( event ) {
 	  	sendSubmit('.$row[0].');

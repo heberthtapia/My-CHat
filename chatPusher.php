@@ -32,6 +32,7 @@
 		<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 		<title>Programando Brother's</title>
 	</head>
@@ -47,28 +48,11 @@
 			<h1>Conectados</h1>
 		</div>
 		<div class="popup-head-right-online pull-right">
-            <button class="chat-header-button" type="button"><i class="fa fa-minus" aria-hidden="true"></i>
-</button>
-			<!--<button class="chat-header-button" type="button"><i class="glyphicon glyphicon-earphone"></i></button>
-            <div class="btn-group gurdeepoushan">
-				<button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
-				<i class="glyphicon glyphicon-paperclip"></i> </button>
-				<ul role="menu" class="dropdown-menu pull-right">
-					<li><a href="#"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Gallery</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Photo</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Video</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span> Audio</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Location</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Contact</a></li>
-				</ul>
-			</div>-->
-
-			<button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i class="fa fa-remove" aria-hidden="true"></i></button>
+            <button class="chat-header-button" type="button" onclick="minimizar('connect')"><i class="fa fa-minus" aria-hidden="true"></i></button>			
         </div>
 	</div>
 
-
-<div id="conectados" class="chat_box_wrapper chat_box_small chat_box_active" style="opacity: 1; display: block; transform: translateX(0px);">
+<div id="connect" class="chat_box_wrapper chat_box_small chat_box_active connect" style="opacity: 1; display: block; transform: translateX(0px);">
     <div class="chat_box touchscroll chat_box_colors_a">
 
         <div class="chat_message_wrapper">
@@ -98,6 +82,15 @@
 <div id="sidebar"></div>
 
 <script>
+
+function minimizar(id){
+	$('.'+id).slideToggle();   //la abre o cierra dependiendo de su estado actual
+}
+
+function cerrar(id){
+	$("aside").remove("#"+id);
+}
+
 function chatClickSend(userTo, e){
 	userFrom = $('input#userFrom').val();
 	num = $('#sidebar > aside').length;
@@ -119,7 +112,6 @@ function chatClickSend(userTo, e){
 		})
 		.done(function(data) {
 			console.log("success");
-			//alert(userFrom+'---'+e.userTo);
 			if(userFrom == e.userTo){
 				$('#sidebar').append(data);				
 				var alt = $("#chat"+userFrom+userTo).prop("scrollHeight");				
@@ -180,9 +172,7 @@ $(function(){
 		//delay(100);
 		
 	});
-
 });
-
 
 /*$(function(){
 
@@ -265,6 +255,10 @@ function sendMessage(data){
 	$("#chat"+data.userTo+data.userFrom).scrollTop(alt);	
 }
 
+/*function callback() {      
+    $( "#effect" ).removeAttr( "style" );      
+}*/
+
 function sendSubmit(idTo){
 
 	userFrom = $('input#userFrom').val();
@@ -276,12 +270,14 @@ function sendSubmit(idTo){
 			'ajax.php',
 			{ msj : $('#submit_message'+idTo).val(), userFrom : $('#userFrom').val(), userTo : idTo, socket_id : pusher.connection.socket_id},
 			function(data){
-					//$('#conversation').append('<p><b>'+data.user+'</b> dice: '+data.mensaje+'</p>');
-					$('div#chat_box_'+data.userFrom+idTo+' div.chat_message_wrapper:last').find('ul').append('<li><p>'+data.mensaje+'</p></li>');
-					
+					var options = {};
+
+					$('div#chat_box_'+data.userFrom+idTo+' div.chat_message_wrapper:last').find('ul').append('<li id="effect"><p>'+data.mensaje+'</p></li>');
+
+					//$('li#effect').effect('slide',options, 0, callback);
+
 					alt = $("#chat"+data.userFrom+idTo).prop("scrollHeight");	
 					$("#chat"+data.userFrom+idTo).scrollTop(alt);
-
 					$('#submit_message'+idTo).val('');
 				},
 				'json');
