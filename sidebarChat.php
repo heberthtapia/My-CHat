@@ -55,7 +55,7 @@ $html = '
 	</div>
 <div class="chat'.$userFrom.''.$userTo.'">
 <div id="chat'.$userFrom.''.$userTo.'" class="chat_box_wrapper chat_box_small chat_box_active" style="opacity: 1; display: block; transform: translateX(0px);">
-    <div id="chat_box_'.$userFrom.''.$userTo.'" class="chat_box touchscroll chat_box_colors_a">';
+    <div id="chat_box_'.$userFrom.''.$userTo.'" class="chat_box touchscroll chat_box_colors_a mCustomScrollbar">';
 
       	$m1 = 0;
         $m2 = 0;
