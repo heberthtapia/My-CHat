@@ -40,40 +40,14 @@
 	</head>
 	<body>
 
+<audio id="audio"><source src="tono/S_Dew_drops.ogg" type="audio/ogg"></audio>
+<audio id="audio1"><source src="tono/Hint.ogg" type="audio/ogg"></audio>
+<audio id="audio2"><source src="tono/Time.ogg" type="audio/ogg"></audio>
+<audio id="audio3"><source src="tono/Skyline.ogg" type="audio/ogg"></audio>
+<audio id="audio4"><source src="tono/Peanut.ogg" type="audio/ogg"></audio>		
+
 <p>Quien envia mensaje:</p>
 <input type="text=""" name="userFrom" id="userFrom">
-
-<style type="text/css">
-	.content {
-    background: #333 none repeat scroll 0 0;
-    box-sizing: border-box;
-    width: 300px;
-    height: 300px;
-    margin: 10px;
-    max-width: 97%;
-    overflow: auto;
-    padding: 20px;
-    position: relative;
-    color: #FFFFFF;    
-}
-</style>
-<a href="#" onclick="clickBoton();">click</a>
-<div class="content">
-				<h2>Ajax example</h2>
-				<hr />
-				<p><a href="ajax.html" rel="load-content">Load content via ajax</a></p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p> 
-				<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-				<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p> 
-				<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p> 
-				<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?</p> 
-				<p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
-				<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p> 
-				<p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p> 
-				<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-				<hr />
-				<p>End of content.</p>
-			</div>
 
 <aside id="sidebar_primary" class="tabbed_sidebar ng-scope chat_sidebar">
 
@@ -205,7 +179,8 @@ function chatClick(userTo){
 		})
 		.always(function() {
 			console.log("complete");
-			$("#chat_box_"+userFrom+userTo).mCustomScrollbar('scrollTo','bottom');  
+			$("#chat_box_"+userFrom+userTo).mCustomScrollbar('scrollTo','bottom');
+			$('#submit_message'+userTo).focus();
 		});
 	}
 }
@@ -225,48 +200,6 @@ $(function(){
 	$(".content").mCustomScrollbar();  
     
 });
-
-/*$(function(){
-
-	canal.bind('nuevo_comentario', function(data) {
-		/* Act on the event 	
-		f = $('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').hasClass( "chat_message_right" ).toString();
-
-		if( f == 'true' ){
-			t = '<div class="chat_message_wrapper">';
-			t+= '<div class="chat_user_avatar">';
-			t+= '   <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >';
-			t+= '     <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">';
-			t+= '   </a>';
-			t+= '</div>';
-			t+= '	<ul class="chat_message">';
-			t+= '        <li>';
-			t+= '            <p>'+data.mensaje+'</p>';
-			t+= '        </li>';
-			t+= '    </ul> </div>';
-			$('div#chat_box_'+data.userTo+data.userFrom).append(t);			
-		}else{
-			if( $('div#chat_box_'+data.userTo+data.userFrom).is(':empty') ){				
-				t = '<div class="chat_message_wrapper">';
-				t+= '<div class="chat_user_avatar">';
-				t+= '   <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >';
-				t+= '     <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">';
-				t+= '   </a>';
-				t+= '</div>';
-				t+= '	<ul class="chat_message">';
-				t+= '        <li>';
-				t+= '            <p>'+data.mensaje+'</p>';
-				t+= '        </li>';
-				t+= '    </ul> </div>';
-				$('div#chat_box_'+data.userTo+data.userFrom).append(t);
-			}else{
-				$('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').find('ul').append('<li><p>'+data.mensaje+'</p></li>');
-			}
-		}
-		alt = $("#chat"+data.userTo+data.userFrom).prop("scrollHeight");
-		$("#chat"+data.userTo+data.userFrom).scrollTop(alt);	
-	});
-});*/
 
 function sendMessage(data){
 
@@ -305,6 +238,7 @@ function sendMessage(data){
 		}
 	}	
 	//$("#chat_box_"+data.userTo+data.userFrom).mCustomScrollbar();
+	$('#audio4')[0].play();
 	$("#chat_box_"+data.userTo+data.userFrom).mCustomScrollbar('scrollTo','bottom');  
 	//$(this).focus();
 }
@@ -326,7 +260,7 @@ function sendSubmit(idTo){
 				},
 				'json')
 			.always(function(data) {
-				console.log("complete");			  
+				console.log("complete");					  
 				$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar('scrollTo','bottom');  
 				$('#submit_message'+idTo).val('');
 				//$(this).focus();
