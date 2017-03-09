@@ -35,6 +35,7 @@
 		<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<script type="text/javascript" src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+		<script type="text/javascript" src="js/push.min.js"></script>
 
 		<title>Programando Brother's</title>
 	</head>
@@ -44,7 +45,7 @@
 <audio id="audio1"><source src="tono/Hint.ogg" type="audio/ogg"></audio>
 <audio id="audio2"><source src="tono/Time.ogg" type="audio/ogg"></audio>
 <audio id="audio3"><source src="tono/Skyline.ogg" type="audio/ogg"></audio>
-<audio id="audio4"><source src="tono/Peanut.ogg" type="audio/ogg"></audio>		
+<audio id="audio4"><source src="tono/Peanut.ogg" type="audio/ogg"></audio>
 
 <p>Quien envia mensaje:</p>
 <input type="text=""" name="userFrom" id="userFrom">
@@ -56,7 +57,7 @@
 			<h1>Conectados</h1>
 		</div>
 		<div class="popup-head-right-online pull-right">
-            <button class="chat-header-button" type="button" onclick="minimizar('connect')"><i class="fa fa-minus" aria-hidden="true"></i></button>			
+            <button class="chat-header-button" type="button" onclick="minimizar('connect')"><i class="fa fa-minus" aria-hidden="true"></i></button>
         </div>
 	</div>
 
@@ -84,7 +85,7 @@
 
         </div>
 	</div>
-	
+
 </aside>
 
 <div id="sidebar"></div>
@@ -99,10 +100,14 @@ function cerrar(id){
 	$("aside").remove("#"+id);
 }
 
-function clickBoton(){
-	
-	$("#clickBoton").mCustomScrollbar('scrollTo','bottom');  
-}
+Push.create("Hola Mundo!",{
+	body: "Este es el cuerpo de la notificación.",
+	icon: "images/perfil.jpg",
+	timeout: 4000,
+	onClick: function(){
+		this.close();
+	}
+});
 
 function chatClickSend(userTo, e){
 	userFrom = $('input#userFrom').val();
@@ -126,12 +131,12 @@ function chatClickSend(userTo, e){
 		.done(function(data) {
 			console.log("success");
 			if(userFrom == e.userTo){
-				$('#sidebar').append(data);				
-				var alt = $("#chat"+userFrom+userTo).prop("scrollHeight");				
-				//$("#chat"+userFrom+userTo).scrollTop(alt);					
+				$('#sidebar').append(data);
+				var alt = $("#chat"+userFrom+userTo).prop("scrollHeight");
+				//$("#chat"+userFrom+userTo).scrollTop(alt);
 				$("#chat_box_"+userFrom+userTo).mCustomScrollbar({
 					autoHideScrollbar: true
-				});   
+				});
 			}
 		})
 		.fail(function() {
@@ -139,7 +144,7 @@ function chatClickSend(userTo, e){
 		})
 		.always(function() {
 			console.log("complete");
-			$("#chat_box_"+userFrom+userTo).mCustomScrollbar('scrollTo','bottom');  
+			$("#chat_box_"+userFrom+userTo).mCustomScrollbar('scrollTo','bottom');
 			sendMessage(e);
 		});
 	}
@@ -165,11 +170,11 @@ function chatClick(userTo){
 		})
 		.done(function(data) {
 			console.log("success");
-			$('#sidebar').append(data);				
+			$('#sidebar').append(data);
 			var alt = $("#chat"+userFrom+userTo).prop("scrollHeight");
 			//alert(alt);
 			//alt =parseInt(alt)+100;
-			//alert(alt); 				
+			//alert(alt);
 			$("#chat_box_"+userFrom+userTo).mCustomScrollbar({
 				autoHideScrollbar: true
 			});
@@ -188,21 +193,14 @@ var pusher = new Pusher('4e89620472fb0a58c62c');
 var canal = pusher.subscribe('canal_prueba');
 
 $(function(){
-
 	canal.bind('nuevo_comentario', function(data) {
 		/* Act on the event */
 		chatClickSend(data.userFrom,data);
-		//sendMessage(data);
-		//delay(100);
-		
 	});
-
-	$(".content").mCustomScrollbar();  
-    
+	$(".content").mCustomScrollbar();
 });
 
 function sendMessage(data){
-
 	f = $('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').hasClass( "chat_message_right" ).toString();
 
 	if( f == 'true' ){
@@ -218,9 +216,9 @@ function sendMessage(data){
 		t+= '        </li>';
 		t+= '    </ul> </div>';
 		//alert('entra aqui');
-		$('div#chat_box_'+data.userTo+data.userFrom).find('div.mCSB_container').append(t);			
+		$('div#chat_box_'+data.userTo+data.userFrom).find('div.mCSB_container').append(t);
 	}else{
-		if( $('div#chat_box_'+data.userTo+data.userFrom).find('div.mCSB_container').is(':empty') ){				
+		if( $('div#chat_box_'+data.userTo+data.userFrom).find('div.mCSB_container').is(':empty') ){
 			t = '<div class="chat_message_wrapper">';
 			t+= '<div class="chat_user_avatar">';
 			t+= '   <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >';
@@ -236,10 +234,10 @@ function sendMessage(data){
 		}else{
 			$('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').find('ul').append('<li><p>'+data.mensaje+'</p></li>');
 		}
-	}	
+	}
 	//$("#chat_box_"+data.userTo+data.userFrom).mCustomScrollbar();
 	$('#audio4')[0].play();
-	$("#chat_box_"+data.userTo+data.userFrom).mCustomScrollbar('scrollTo','bottom');  
+	$("#chat_box_"+data.userTo+data.userFrom).mCustomScrollbar('scrollTo','bottom');
 	//$(this).focus();
 }
 
@@ -254,14 +252,14 @@ function sendSubmit(idTo){
 		$.post(
 			'ajax.php',
 			{ msj : $('#submit_message'+idTo).val(), userFrom : $('#userFrom').val(), userTo : idTo, socket_id : pusher.connection.socket_id},
-			function(data){					
+			function(data){
 					$('div#chat_box_'+data.userFrom+idTo+' div.chat_message_wrapper:last').find('ul').append('<li id="effect"><p>'+data.mensaje+'</p></li>');
-					//$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar(); 					
+					//$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar();
 				},
 				'json')
 			.always(function(data) {
-				console.log("complete");					  
-				$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar('scrollTo','bottom');  
+				console.log("complete");
+				$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar('scrollTo','bottom');
 				$('#submit_message'+idTo).val('');
 				//$(this).focus();
 			});
@@ -285,14 +283,14 @@ function sendSubmit(idTo){
 					t+= '            <p>'+data.mensaje+'</p>';
 					t+= '        </li>';
 					t+= '    </ul> </div>';
-					
-					$('div#chat_box_'+data.userFrom+idTo).find('div.mCSB_container').append(t);				
-					//$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar();				
+
+					$('div#chat_box_'+data.userFrom+idTo).find('div.mCSB_container').append(t);
+					//$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar();
 				},
 				'json')
 				.always(function(data) {
-					console.log("complete");			  
-					$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar('scrollTo','bottom');  
+					console.log("complete");
+					$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar('scrollTo','bottom');
 					$('#submit_message'+idTo).val('');
 					//$(this).focus();
 				});
