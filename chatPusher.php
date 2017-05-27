@@ -37,7 +37,7 @@
 		<script type="text/javascript" src="js/jquery.mCustomScrollbar.concat.min.js"></script>
 		<script type="text/javascript" src="js/push.min.js"></script>
 
-		<title>Programando Brother's</title>
+		<title>Chat en tiempo REAL</title>
 	</head>
 	<body>
 
@@ -98,9 +98,17 @@ function minimizar(id){
 
 function cerrar(id){
 	$("aside").remove("#"+id);
+	num = 1;
+	$('#sidebar aside').each(function (index)
+	{
+		id = $(this).attr('id');
+		r = ((280*num)+30);
+		$('aside#'+id).css('right', r+'px');
+		num++;
+	});
 }
 
-Push.create("Hola Mundo!",{
+Push.create("Bienbenido al CHAT...!!!",{
 	body: "Este es el cuerpo de la notificación.",
 	icon: "images/perfil.jpg",
 	timeout: 4000,
@@ -108,7 +116,12 @@ Push.create("Hola Mundo!",{
 		this.close();
 	}
 });
-
+/**
+ * [chatClickSend Abre un chat cuando se lo envian]
+ * @param  {[type]} userTo [description]
+ * @param  {[type]} e      [description]
+ * @return {[type]}        [description]
+ */
 function chatClickSend(userTo, e){
 	userFrom = $('input#userFrom').val();
 	num = $('#sidebar > aside').length;
@@ -149,7 +162,11 @@ function chatClickSend(userTo, e){
 		});
 	}
 }
-
+/**
+ * [chatClick description]
+ * @param  {[type]} userTo [Cuando se hace Click sobre algun conectado]
+ * @return {[type]}        [description]
+ */
 function chatClick(userTo){
 	userFrom = $('input#userFrom').val();
 	num = $('#sidebar > aside').length;
@@ -217,6 +234,7 @@ function sendMessage(data){
 		t+= '    </ul> </div>';
 		//alert('entra aqui');
 		$('div#chat_box_'+data.userTo+data.userFrom).find('div.mCSB_container').append(t);
+
 	}else{
 		if( $('div#chat_box_'+data.userTo+data.userFrom).find('div.mCSB_container').is(':empty') ){
 			t = '<div class="chat_message_wrapper">';
@@ -235,6 +253,22 @@ function sendMessage(data){
 			$('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').find('ul').append('<li><p>'+data.mensaje+'</p></li>');
 		}
 	}
+
+	$.ajax({
+			url: 'saveMessage.php',
+			type: 'POST',
+			data: {userFrom: data.userTo, userTo: data.userFrom, message: data.mensaje},
+		})
+		.done(function() {
+			console.log("success");
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+
 	//$("#chat_box_"+data.userTo+data.userFrom).mCustomScrollbar();
 	$('#audio4')[0].play();
 	$("#chat_box_"+data.userTo+data.userFrom).mCustomScrollbar('scrollTo','bottom');

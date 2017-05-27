@@ -138,7 +138,7 @@ $html.='</div>
 	    <div class="uk-input-group">
 	    	<form id="formChat'.$row[0].'" method="POST">
 		        <div class="gurdeep-chat-box">
-			        <input type="text" placeholder="Escriba mensaje" id="submit_message'.$row[0].'" name="submit_message'.$row[0].'" class="md-input chatMessage">
+			        <input type="text" placeholder="Escriba mensaje" id="submit_message'.$row[0].'" name="submit_message'.$row[0].'" class="md-input chatMessage" autocomplete="off">
 		        </div>
 			    <span class="uk-input-group-addon">
 			    	<a href="#" id = "send'.$row[0].'" onclick = "sendSubmit('.$row[0].')" ><i class="glyphicon glyphicon-send"></i></a>
