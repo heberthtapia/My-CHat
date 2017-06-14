@@ -541,7 +541,7 @@ if (!defined('_ADODB_LAYER')) {
 		$argHostname = "localhost";
 		$argUsername = "root";
 		$argPassword = "mysql";
-		$argDatabaseName = "chateje";
+		$argDatabaseName = "bd_elviejoroble";
 
 		/*$argHostname = "mysql.hostinger.es";
 		$argUsername = "u779848257_viejo";

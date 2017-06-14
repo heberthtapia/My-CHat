@@ -2,19 +2,19 @@
 	session_start();
 
 	include 'adodb5/adodb.inc.php';
-
 	$db = NewADOConnection('mysqli');
 	//$db->debug = true;
 	$db->Connect();
 
-	$sql = 'SELECT * FROM usuario ';
-    $srtQuery = $db->Execute($sql);
+	$sql = 'SELECT * FROM usuario AS u, empleado AS e ';
+	$sql.= 'WHERE u.id_empleado = e.id_empleado ';
+	//$sql.= 'AND u.status = "Activo"';
+	$srtQuery = $db->Execute($sql);
 
-    $_SESSION["id_admin"] = $id_admin = '9999';
-    $_SESSION["nombre"] =$nombre = 'Heberth';
-    $_SESSION["paterno"] =$ap_paterno = 'Tapia';
+	$_SESSION["id_admin"] = $id_admin = '6004317';
+	$_SESSION["nombre"] =$nombre = 'Heberth';
+	$_SESSION["paterno"] =$ap_paterno = 'Tapia';
 ?>
-
 <!doctype html>
 <html lang="es">
 	<head>
@@ -37,7 +37,7 @@
 		<script type="text/javascript" src="js/jquery.mCustomScrollbar.concat.min.js"></script>
 		<script type="text/javascript" src="js/push.min.js"></script>
 
-		<title>Chat en tiempo REAL</title>
+		<title>CHAT en tiempo REAL</title>
 	</head>
 	<body>
 
@@ -51,51 +51,51 @@
 <input type="text=""" name="userFrom" id="userFrom">
 
 <aside id="sidebar_primary" class="tabbed_sidebar ng-scope chat_sidebar">
-
 	<div class="popup-head">
-    	<div class="popup-head-left pull-left">
+		<div class="popup-head-left pull-left">
 			<h1>Conectados</h1>
 		</div>
 		<div class="popup-head-right-online pull-right">
-            <button class="chat-header-button" type="button" onclick="minimizar('connect')"><i class="fa fa-minus" aria-hidden="true"></i></button>
-        </div>
+			<button class="chat-header-button" type="button" onclick="minimizar('connect')"><i class="fa fa-minus" aria-hidden="true"></i></button>
+		</div>
 	</div>
-
 <div id="connect" class="chat_box_wrapper chat_box_small chat_box_active connect mCustomScrollbar">
-    <div class="chat_box touchscroll chat_box_colors_a>
-
-        <div class="chat_message_wrapper">
-
-            <div class="chat_user_avatar">
-                 <ul>
-                 <?php
-                   while( $row = $srtQuery->FetchRow() ){
-                 ?>
-                    <li>
-                    	<a onclick="chatClick(<?=$row['id_empleado']?>);" >
-		                    <img alt="" title=""  src="http://www.webncc.in/images/gurdeeposahan.jpg" class="md-user-image">
-		                    <p><?=$row[1].' '.$row[2].' '.$row[3]?></p>
-		                </a>
-                    </li>
-                 <?php
-                 	}
-                 ?>
-                </ul>
-            </div>
-
-        </div>
+	<div class="chat_box touchscroll chat_box_colors_a">
+		<div class="chat_message_wrapper">
+			<div class="chat_user_avatar">
+				<ul>
+				<?php
+					while( $row = $srtQuery->FetchRow() ){
+				?>
+					<li>
+						<a onclick="chatClick(<?=$row['id_empleado']?>);" >
+							<?PHP
+								  if( $row['foto'] != '' ){
+							?>
+								<img class="thumb md-user-image" src="thumb/phpThumb.php?src=../modulo/empleado/uploads/<?=($row['foto']);?>&amp;w=32&amp;h=32&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="">
+							<?PHP
+								}else{
+							?>
+								<img class="thumb md-user-image" src="thumb/phpThumb.php?src=../images/sin_imagen.jpg&amp;w=32&amp;h=32&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="">
+							<?PHP
+								}
+							?>
+							<p><?=$row['nombre'].' '.$row['apP'].' '.$row['apM']?></p>
+						</a>
+					</li>
+				<?php
+					}
+				?>
+				</ul>
+			</div>
+		</div>
 	</div>
-
 </aside>
-
 <div id="sidebar"></div>
-
 <script>
-
 function minimizar(id){
 	$('.'+id).slideToggle();   //la abre o cierra dependiendo de su estado actual
 }
-
 function cerrar(id){
 	$("aside").remove("#"+id);
 	num = 1;
@@ -107,10 +107,9 @@ function cerrar(id){
 		num++;
 	});
 }
-
 Push.create("Bienbenido al CHAT...!!!",{
 	body: "Este es el cuerpo de la notificación.",
-	icon: "images/perfil.jpg",
+	icon: "images/logo-elviejoroble.png",
 	timeout: 4000,
 	onClick: function(){
 		this.close();
@@ -146,7 +145,6 @@ function chatClickSend(userTo, e){
 			if(userFrom == e.userTo){
 				$('#sidebar').append(data);
 				var alt = $("#chat"+userFrom+userTo).prop("scrollHeight");
-				//$("#chat"+userFrom+userTo).scrollTop(alt);
 				$("#chat_box_"+userFrom+userTo).mCustomScrollbar({
 					autoHideScrollbar: true
 				});
@@ -189,9 +187,6 @@ function chatClick(userTo){
 			console.log("success");
 			$('#sidebar').append(data);
 			var alt = $("#chat"+userFrom+userTo).prop("scrollHeight");
-			//alert(alt);
-			//alt =parseInt(alt)+100;
-			//alert(alt);
 			$("#chat_box_"+userFrom+userTo).mCustomScrollbar({
 				autoHideScrollbar: true
 			});
@@ -219,29 +214,25 @@ $(function(){
 
 function sendMessage(data){
 	f = $('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').hasClass( "chat_message_right" ).toString();
-
 	if( f == 'true' ){
 		t = '<div class="chat_message_wrapper">';
 		t+= '<div class="chat_user_avatar">';
-		t+= '   <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >';
-		t+= '     <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">';
-		t+= '   </a>';
+		t+= '<img class="thumb md-user-image" src="thumb/phpThumb.php?src=../modulo/empleado/uploads/'+data.foto+'&amp;w=32&amp;h=32&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="Foto de Perfil" title="Foto de Perfil">';
 		t+= '</div>';
 		t+= '	<ul class="chat_message">';
 		t+= '        <li>';
 		t+= '            <p>'+data.mensaje+'</p>';
 		t+= '        </li>';
 		t+= '    </ul> </div>';
-		//alert('entra aqui');
 		$('div#chat_box_'+data.userTo+data.userFrom).find('div.mCSB_container').append(t);
-
+		/* Alerta de Nuevo Mensaje */
+		$('aside#'+data.userTo+data.userFrom).find('div.popup-head').addClass('parpadea');
+		$('aside#'+data.userTo+data.userFrom).find('div.parpadea').removeClass('popup-head');
 	}else{
 		if( $('div#chat_box_'+data.userTo+data.userFrom).find('div.mCSB_container').is(':empty') ){
 			t = '<div class="chat_message_wrapper">';
 			t+= '<div class="chat_user_avatar">';
-			t+= '   <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >';
-			t+= '     <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">';
-			t+= '   </a>';
+			t+= '     <img class="thumb md-user-image" src="thumb/phpThumb.php?src=../modulo/empleado/uploads/'+data.foto+'&amp;w=32&amp;h=32&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="Foto de Perfil" title="Foto de Perfil">';
 			t+= '</div>';
 			t+= '	<ul class="chat_message">';
 			t+= '        <li>';
@@ -249,11 +240,16 @@ function sendMessage(data){
 			t+= '        </li>';
 			t+= '    </ul> </div>';
 			$('div#chat_box_'+data.userTo+data.userFrom).find('div.mCSB_container').append(t);
+			/* Alerta de Nuevo Mensaje */
+			$('aside#'+data.userTo+data.userFrom).find('div.popup-head').addClass('parpadea');
+			$('aside#'+data.userTo+data.userFrom).find('div.parpadea').removeClass('popup-head');
 		}else{
 			$('div#chat_box_'+data.userTo+data.userFrom+' div.chat_message_wrapper:last').find('ul').append('<li><p>'+data.mensaje+'</p></li>');
+			/* Alerta de Nuevo Mensaje */
+			$('aside#'+data.userTo+data.userFrom).find('div.popup-head').addClass('parpadea');
+			$('aside#'+data.userTo+data.userFrom).find('div.parpadea').removeClass('popup-head')
 		}
 	}
-
 	$.ajax({
 			url: 'saveMessage.php',
 			type: 'POST',
@@ -267,70 +263,59 @@ function sendMessage(data){
 		})
 		.always(function() {
 			console.log("complete");
-		});
-
-	//$("#chat_box_"+data.userTo+data.userFrom).mCustomScrollbar();
+		});a.userFrom).mCustomScrollbar();
 	$('#audio4')[0].play();
 	$("#chat_box_"+data.userTo+data.userFrom).mCustomScrollbar('scrollTo','bottom');
-	//$(this).focus();
 }
 
-
 function sendSubmit(idTo){
-
 	userFrom = $('input#userFrom').val();
-
 	r = $('div#chat_box_'+userFrom+idTo+' div.chat_message_wrapper:last').hasClass( "chat_message_right" ).toString();
-
 	if( r == 'true' ){
 		$.post(
 			'ajax.php',
 			{ msj : $('#submit_message'+idTo).val(), userFrom : $('#userFrom').val(), userTo : idTo, socket_id : pusher.connection.socket_id},
 			function(data){
 					$('div#chat_box_'+data.userFrom+idTo+' div.chat_message_wrapper:last').find('ul').append('<li id="effect"><p>'+data.mensaje+'</p></li>');
-					//$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar();
 				},
 				'json')
 			.always(function(data) {
 				console.log("complete");
 				$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar('scrollTo','bottom');
 				$('#submit_message'+idTo).val('');
-				//$(this).focus();
+				limpNMessaje(data.userFrom+idTo);
 			});
-
 		return false;
 	}else{
-
 		$.post(
 			'ajax.php',
 			{ msj : $('#submit_message'+idTo).val(), userFrom : $('#userFrom').val(), userTo : idTo, socket_id : pusher.connection.socket_id},
 			function(data){
-					//$('#conversation').append('<p><b>'+data.user+'</b> dice: '+data.mensaje+'</p>');
 					t = '<div class="chat_message_wrapper chat_message_right">';
 					t+= '<div class="chat_user_avatar">';
-					t+= '   <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >';
-					t+= '     <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">';
-					t+= '   </a>';
+					t+= '     <img class="thumb md-user-image" src="thumb/phpThumb.php?src=../modulo/empleado/uploads/'+data.foto+'&amp;w=32&amp;h=32&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="Foto de Perfil" title="Foto de Perfil">';
 					t+= '</div>';
 					t+= '	<ul class="chat_message">';
 					t+= '        <li>';
 					t+= '            <p>'+data.mensaje+'</p>';
 					t+= '        </li>';
 					t+= '    </ul> </div>';
-
 					$('div#chat_box_'+data.userFrom+idTo).find('div.mCSB_container').append(t);
-					//$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar();
 				},
 				'json')
 				.always(function(data) {
 					console.log("complete");
 					$("#chat_box_"+data.userFrom+idTo).mCustomScrollbar('scrollTo','bottom');
 					$('#submit_message'+idTo).val('');
-					//$(this).focus();
+					limpNMessaje(data.userFrom+idTo);
 				});
 		return false;
 	}
-
+}
+function limpNMessaje(id){
+	/* Alerta de Nuevo Mensaje */
+	$('aside#'+id).find('div.parpadea').addClass('popup-head');
+	$('aside#'+id).find('div.popup-head').removeClass('parpadea')
 }
 </script>
 

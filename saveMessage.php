@@ -1,13 +1,10 @@
 <?php
-
 	include 'adodb5/adodb.inc.php';
 	include 'inc/function.php';
-
 
 	$db = NewADOConnection('mysqli');
 	//$db->debug = true;
 	$db->Connect();
-
 	$op = new cnFunction();
 
 	$fecha = $op->ToDay();
@@ -19,7 +16,7 @@
 
 	$intID = $userTo + $userFrom;
 
-	echo $sql = "INSERT INTO chat(chatID, sendFrom, sendTo, message, dateSend) VALUES('$intID', '$userFrom', '$userTo', '$message', '".$fecha." ".$hora."')";
+	$sql = "INSERT INTO chat(chatID, sendFrom, sendTo, message, dateSend) VALUES('$intID', '$userFrom', '$userTo', '$message', '".$fecha." ".$hora."')";
 
 	$resp = $db->Execute($sql);
 
@@ -28,3 +25,5 @@
 	else
 		echo 0;
 ?>
+<script>
+</script>
