@@ -20,7 +20,7 @@
 	if($row['foto'] == '') $row['foto'] = 'sin_imagen.jpg';
 
 	$options = array(
-    	//'encrypted' => true
+		//'encrypted' => true
 	);
 
 	$pusher = new Pusher(
