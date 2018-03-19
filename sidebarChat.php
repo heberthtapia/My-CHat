@@ -7,11 +7,10 @@ $db = NewADOConnection('mysqli');
 //$db->debug = true;
 $db->Connect();
 
-$userFrom = $_POST['userFrom'];//$_SESSION["id_admin"];
-
-$userTo = $_POST['userTo'];
-
-$num  = $_POST['num'];
+$userFrom = $_POST['userFrom'];
+$userTo   = $_POST['userTo'];
+$num      = $_POST['num'];
+$right    = $_POST['right'];
 
 $sqlFoto = 'SELECT foto FROM empleado ';
 $sqlFoto.= 'WHERE id_empleado = '.$userFrom.'';
@@ -49,16 +48,16 @@ $query = $db->Execute($sqlQuery);
 
 
 $html = '
-<aside id="'.$userFrom.''.$userTo.'" class="tabbed_sidebar ng-scope chat_sidebar" style="right: '.((280*$num)+30).'px; width: 260px;">
+<aside id="'.$userFrom.''.$userTo.'" class="tabbed_sidebar ng-scope chat_sidebar animation-target3" style="right: '.(((265*$num)+2)-$right).'px; width: 260px;">
 
 	<div class="popup-head">
 		<div class="popup-head-left pull-left">
 			<a title="'.$row['nombre'].' '.$row['apP'].' '.$row['apM'].'" onclick="minimizar(&#39;chat'.$userFrom.''.$userTo.'&#39;)">';
 			if( $row['foto'] != '' ){
-$html.='        <img class="thumb md-user-image" src="thumb/phpThumb.php?src=../modulo/empleado/uploads/'.$row['foto'].'&amp;w=32&amp;h=32&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="Foto de Perfil" title="Foto de Perfil">';
+$html.='        <img class="thumb md-user-image" src="thumb/phpThumb.php?src=../modulo/empleado/uploads/files/thumbnail/'.$row['foto'].'&amp;w=35&amp;h=35&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="Foto de Perfil" title="Foto de Perfil">';
 
 			}else{
-$html.='       	<img class="thumb md-user-image" src="thumb/phpThumb.php?src=../images/sin_imagen.jpg&amp;w=32&amp;h=32&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="">';
+$html.='       	<img class="thumb md-user-image" src="thumb/phpThumb.php?src=../images/sin_imagen.jpg&amp;w=35&amp;h=35&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="">';
 			}
 $html.='<h1>'.$row['nombre'].' '.$row['apP'].' '.$row['apM'].'</h1><small><br> <i class="fa fa-briefcase" aria-hidden="true"></i> Administrador</small>
 			</a>
@@ -86,10 +85,10 @@ $html.='<div class="chat_message_wrapper">';
 $html.='<div class="chat_user_avatar">';
 
 			if( $row['foto'] != '' ){
-$html.='        <img class="thumb md-user-image" src="thumb/phpThumb.php?src=../modulo/empleado/uploads/'.$row['foto'].'&amp;w=32&amp;h=32&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="Foto de Perfil" title="Foto de Perfil">';
+$html.='        <img class="thumb md-user-image" src="thumb/phpThumb.php?src=../modulo/empleado/uploads/files/thumbnail/'.$row['foto'].'&amp;w=35&amp;h=35&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="Foto de Perfil" title="Foto de Perfil">';
 
 			}else{
-$html.='       	<img class="thumb md-user-image" src="thumb/phpThumb.php?src=../images/sin_imagen.jpg&amp;w=32&amp;h=32&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="">';
+$html.='       	<img class="thumb md-user-image" src="thumb/phpThumb.php?src=../images/sin_imagen.jpg&amp;w=35&amp;h=35&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="">';
 			}
 $html.=' </div>';
 $html.='<ul class="chat_message">';
@@ -124,10 +123,10 @@ $html.='<div class="chat_message_wrapper chat_message_right">';
 $html.='<div class="chat_user_avatar">';
 
 			if( $rowFoto['foto'] != '' ){
-$html.='        <img class="thumb md-user-image" src="thumb/phpThumb.php?src=../modulo/empleado/uploads/'.$rowFoto['foto'].'&amp;w=32&amp;h=32&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="Foto de Perfil" title="Foto de Perfil">';
+$html.='        <img class="thumb md-user-image" src="thumb/phpThumb.php?src=../modulo/empleado/uploads/files/thumbnail/'.$rowFoto['foto'].'&amp;w=35&amp;h=35&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="Foto de Perfil" title="Foto de Perfil">';
 
 			}else{
-$html.='       	<img class="thumb md-user-image" src="thumb/phpThumb.php?src=../images/sin_imagen.jpg&amp;w=32&amp;h=32&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="">';
+$html.='       	<img class="thumb md-user-image" src="thumb/phpThumb.php?src=../images/sin_imagen.jpg&amp;w=35&amp;h=35&amp;far=1&amp;bg=FFFFFF&amp;hash=361c2f150d825e79283a1dcc44502a76" alt="">';
 			}
 $html.='  </div>';
 $html.='<ul class="chat_message">';
