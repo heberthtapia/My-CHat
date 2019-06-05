@@ -47,12 +47,12 @@
 <audio id="audio4"><source src="tono/Peanut.ogg" type="audio/ogg"></audio>
 
 <p>Quien envia mensaje:</p>
-<input type="text=" name="userFrom" id="userFrom">
+<input type="text=" name="userFrom" id="userFrom" value="6004317">
 
 <aside id="iconChat" class="animation-target">
 	<a href="#" onclick="openChat();">
 		<div>
-			<img src="images/chat4.png" width="45" alt="chat">
+			<img src="images/chat4.png" width="45">
 		</div>
 	</a>
 </aside>
@@ -97,6 +97,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 </aside>
 
 
@@ -171,7 +172,7 @@ function minimizar(id){
  */
 function remove(id){
 	//$("aside").remove("#"+id);
-	setTimeout(function() {
+	//setTimeout(function() {
     	$("aside").remove("#"+id);
     	num = 1;
 		var coordenadas = $("#sidebar_primary").position();
@@ -181,14 +182,13 @@ function remove(id){
 		}else{
 			right = -2;
 		}
-		$('#sidebar aside').each(function (index)
-		{
+		$('#sidebar aside').each(function (index){
 			id = $(this).attr('id');
 			r = ((265*num)-right);
 			$('aside#'+id).css('right', r+'px');
 			num++;
 		});
-    }, 1950 );
+    //}, 1800 );
 }
 /**
  * [cerrar description] llama a remove();
@@ -196,7 +196,9 @@ function remove(id){
  * @return {[type]}    [description]
  */
 function cerrar(id){
-	$("aside#"+id).addClass("animation-target4", remove(id) );
+	//$("aside#"+id).removeClass("animation-target3");
+	//$("aside#"+id).addClass("animation-target4");
+	remove(id);
 }
 /**
  * [adicionaClass adiciona clase]
